@@ -1,28 +1,44 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+    <v-main>
+      <v-btn @click="sampleApi">一覧を取得</v-btn>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import axios from "axios";
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "App",
+  data() {
+    return {
+      name: "aaa",
+      commnet: "bbb",
+    };
+  },
+  methods: {
+    sampleApi() {
+      axios
+        .post(
+          "https://firestore.googleapis.com/v1/projects/vuejs-sample-ff968/databases/(default)/documents/cities/LA",
+          {
+            fields: {
+              name: {
+                // stringValue: this.name,
+                stringValue: "aaa",
+              },
+              commnent: {
+                // stringValue: this.comment,
+                stringValue: "bbb",
+              },
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response);
+        });
+    },
+  },
+};
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
